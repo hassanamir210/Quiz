@@ -10,15 +10,18 @@ class QuestionController extends Controller
 {
     public function generateQuestion()
     {
-
+        // Get Animals Data
     	$birds = Bird::pluck('name')->toArray();
     	$reptiles = Reptile::pluck('name')->toArray();
-    	$allAnimals = array_merge($birds, $reptiles);
+    	
+        // Merge Reptile And Birds Array
+        $allAnimals = array_merge($birds, $reptiles);
 
     	$length = count($allAnimals);
-    	$answerIndex = rand(0,$length-1);
+    	
+        $answerIndex = rand(0,$length-1);
 
-    	$question = "Which image represent a ".$allAnimals[$answerIndex]."?";
+    	$question = "Which image represent a ".ucfirst($allAnimals[$answerIndex])."?";
 
 
     	$options = [];
@@ -34,6 +37,10 @@ class QuestionController extends Controller
     		}
     	}
 
-    	return view('quiz',compact('question','options'));
+        shuffle($options);
+
+        $correctAnswerIndex = array_search($allAnimals[$answerIndex], $options);
+
+    	return view('quiz',compact('question','options','correctAnswerIndex'));
     }
 }

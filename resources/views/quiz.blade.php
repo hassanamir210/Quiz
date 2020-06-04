@@ -68,6 +68,24 @@
                 border-radius: 5px;
                 font-size: 20px;
             }
+            .wrong{
+                display: none;
+                background-color: #bf8d8d;
+                color: white;
+                font-size: 25px;
+                font-weight: bold;
+                border-radius: 5px;
+                padding: 5px;
+            }
+            .correct{
+                display: none;
+                background-color: #57c77f;
+                color: white;
+                font-size: 25px;
+                font-weight: bold;
+                border-radius: 5px;
+                padding: 5px;
+            }
         </style>
     </head>
     <body>
@@ -84,12 +102,39 @@
                 </div>
 
                 <div class="m-b-md">
-                    @foreach($options as $option)
-                        <button class="custom-option">{{$option}} img</button> 
+                    @foreach($options as $key => $option)
+                        <button class="custom-option" 
+                                onclick="checkAnswer('{{$correctAnswerIndex}}','{{$key}}')"
+                        >
+                            {{ucfirst($option)}} img
+                        </button> 
                         <br><br>
                     @endforeach
                 </div>
+                <div id="correct" class="correct">
+                    <span>Correct Answer</span>
+                </div>
+                <div id="wrong" class="wrong">
+                    <span>Wrong Answer</span>
+                </div>
             </div>
         </div>
+
+
     </body>
+    <script type="text/javascript">
+        function checkAnswer(answerIndex,selectedIndex) {
+            if(answerIndex==selectedIndex)
+            {
+                document.getElementById("correct").style.display = "block";
+                document.getElementById("wrong").style.display = "none"; 
+
+            }
+            else
+            {
+                document.getElementById("correct").style.display = "none";
+                document.getElementById("wrong").style.display = "block"; 
+            }
+        }
+    </script>
 </html>
